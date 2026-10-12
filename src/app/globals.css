@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+/* =========================================================================
+   Pimenta Doce · tokens tirados do Instagram (@intima.pimentadocemoda)
+   Vinho do logo para ação e marca, champanhe e dourado das molduras dos posts
+   para superfícies e detalhes. Arcos de espelho de provador com fio dourado
+   emolduram as peças; borda de renda recortada separa as seções.
+   ========================================================================= */
+:root {
+  --papel: #F8F1EA;
+  --papel-2: #EFE2D3;
+  --papel-3: #FFFFFF;
+  --tinta: #2A0E12;
+  --tinta-2: #6B5050;
+  --pimenta: #6E0A10;
+  --pimenta-2: #520509;
+  --sobre-pimenta: #FFF7F0;
+  --rosa: #E6CFB5;
+  --ouro: #A57A32;
+  --linha: rgba(42, 14, 18, .13);
+  --contorno: rgba(42, 14, 18, .5);
+  --ok: #2F6B4F;
+  --sombra: 0 1px 0 var(--linha), 0 24px 48px -28px rgba(42, 14, 18, .4);
+
+  --f-display: var(--font-cormorant), "Garamond", Georgia, serif;
+  --f-script: var(--font-pinyon), "Snell Roundhand", cursive;
+  --f-texto: var(--font-hanken), "Segoe UI", system-ui, sans-serif;
+  --f-mono: var(--font-dmmono), ui-monospace, Consolas, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --papel: #1A0B0D; --papel-2: #2A1316; --papel-3: #33191C;
+    --tinta: #F6EADF; --tinta-2: #CDB5A6;
+    --pimenta: #EBA2A6; --pimenta-2: #F4BCBF; --sobre-pimenta: #2A0E12;
+    --rosa: #4A2226; --ouro: #D9B36E; --linha: rgba(246, 234, 223, .14); --contorno: rgba(246, 234, 223, .42);
+    --ok: #8FD3AE;
+    --sombra: 0 1px 0 var(--linha), 0 24px 48px -28px rgba(0, 0, 0, .75);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --papel: #1A0B0D; --papel-2: #2A1316; --papel-3: #33191C;
+    --tinta: #F6EADF; --tinta-2: #CDB5A6;
+    --pimenta: #EBA2A6; --pimenta-2: #F4BCBF; --sobre-pimenta: #2A0E12;
+    --rosa: #4A2226; --ouro: #D9B36E; --linha: rgba(246, 234, 223, .14); --contorno: rgba(246, 234, 223, .42);
+    --ok: #8FD3AE;
+    --sombra: 0 1px 0 var(--linha), 0 24px 48px -28px rgba(0, 0, 0, .75);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-papel: var(--papel);
+  --color-papel-2: var(--papel-2);
+  --color-papel-3: var(--papel-3);
+  --color-tinta: var(--tinta);
+  --color-tinta-2: var(--tinta-2);
+  --color-pimenta: var(--pimenta);
+  --color-pimenta-2: var(--pimenta-2);
+  --color-sobre-pimenta: var(--sobre-pimenta);
+  --color-rosa: var(--rosa);
+  --color-ouro: var(--ouro);
+  --color-linha: var(--linha);
+  --color-contorno: var(--contorno);
+  --color-ok: var(--ok);
+  --color-zap: #1F7A4D;
+
+  --font-display: var(--f-display);
+  --font-texto: var(--f-texto);
+  --font-mono: var(--f-mono);
+  --font-script: var(--f-script);
+
+  --text-display: clamp(3rem, 9vw, 6.4rem);
+  --text-secao: clamp(2rem, 4.6vw, 3.1rem);
+  --shadow-suave: var(--sombra);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--f-texto);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--f-display); font-weight: 500; line-height: 1; letter-spacing: -.01em; text-wrap: balance; }
+  :focus-visible { outline: 2px solid var(--pimenta); outline-offset: 3px; border-radius: 2px; }
+  section[id] { scroll-margin-top: 96px; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+}
+
+@layer components {
+  .wrap { max-width: 1200px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+  .secao { padding-block: clamp(64px, 9vw, 112px); }
+  .rotulo { font: 600 .72rem/1.2 var(--f-texto); letter-spacing: .24em; text-transform: uppercase; color: var(--ouro); }
+  .titulo-secao { font-size: var(--text-secao); }
+  .titulo-secao em { font-family: var(--f-script); font-style: normal; font-weight: 400; font-size: 1.15em; color: var(--pimenta); letter-spacing: 0; }
+
+  .btn {
+    --bg: var(--pimenta); --fg: var(--sobre-pimenta);
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 48px; padding: 0 24px; border: 1px solid var(--bg); border-radius: 999px;
+    background: var(--bg); color: var(--fg); font: 600 .9rem/1 var(--f-texto); letter-spacing: .02em;
+    text-decoration: none; cursor: pointer; transition: background .2s, border-color .2s, transform .2s;
+  }
+  .btn:hover { --bg: var(--pimenta-2); }
+  .btn:active { transform: translateY(1px); }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-linha { --bg: transparent; --fg: var(--tinta); border-color: var(--contorno); }
+  .btn-linha:hover { --bg: var(--tinta); --fg: var(--papel); border-color: var(--tinta); }
+
+  /* Arco de espelho de provador */
+  .arco { border-radius: 999px 999px 18px 18px; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ouro) 45%, transparent); }
+
+  /* Borda de renda recortada (bico de renda) no pé de um bloco */
+  .renda-pe {
+    -webkit-mask: radial-gradient(circle 9px at 50% 100%, transparent 8.5px, #000 9px) 0 0 / 22px 100% repeat-x, linear-gradient(#000, #000) top / 100% calc(100% - 9px) no-repeat;
+    mask: radial-gradient(circle 9px at 50% 100%, transparent 8.5px, #000 9px) 0 0 / 22px 100% repeat-x, linear-gradient(#000, #000) top / 100% calc(100% - 9px) no-repeat;
+  }
+  .renda-faixa {
+    height: 18px;
+    background: radial-gradient(circle 9px at 50% 0, var(--cor, var(--papel-2)) 8.5px, transparent 9px) 0 0 / 22px 18px repeat-x;
+  }
+
+  .swatch { width: 22px; height: 22px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .18); }
+
+  /* Diálogos */
+  dialog.folha { padding: 0; border: 0; max-width: 100%; max-height: 100%; color: var(--tinta); }
+  dialog.folha::backdrop { background: rgba(23, 13, 16, .55); backdrop-filter: blur(3px); }
+  dialog.folha[open] { display: flex; flex-direction: column; animation: sobe .35s cubic-bezier(.2, .8, .2, 1); }
+  dialog.lateral { margin: 0 0 0 auto; height: 100%; width: min(480px, 100%); }
+  dialog.lateral[open] { animation-name: desliza; }
+  dialog.centro { margin: auto auto 0; width: 100%; max-height: 92dvh; border-radius: 22px 22px 0 0; }
+  @media (min-width: 860px) { dialog.centro { margin: auto; width: min(960px, calc(100% - 48px)); max-height: 88dvh; border-radius: 22px; } }
+
+  .sem-barra { scrollbar-width: none; }
+  .sem-barra::-webkit-scrollbar { display: none; }
+}
+
+@keyframes sobe { from { transform: translateY(28px); opacity: .4; } }
+@keyframes desliza { from { transform: translateX(40px); opacity: .4; } }
+@keyframes entra { from { opacity: .001; transform: translateY(10px); } }
+@keyframes pulo { 40% { transform: scale(1.3); } }
+@keyframes flutua { 50% { transform: translateY(-8px) rotate(-1deg); } }
