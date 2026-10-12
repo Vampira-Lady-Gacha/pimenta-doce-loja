@@ -1,5 +1,5 @@
 import { CONFIG } from "@/lib/config";
-import { waUrl, mensagemDuvida } from "@/lib/loja";
+import { DIRECT, TEM_WHATSAPP, waUrl, mensagemDuvida } from "@/lib/loja";
 import { Marca } from "./Marca";
 
 export function Rodape() {
@@ -28,8 +28,9 @@ export function Rodape() {
         <div>
           <h2 className="mb-3 font-mono text-[.7rem] tracking-[.16em] uppercase opacity-70">Contato</h2>
           <ul className="grid gap-2 opacity-90">
-            <li>WhatsApp <a className="font-mono" href={waUrl(mensagemDuvida())} target="_blank" rel="noopener noreferrer">{CONFIG.whatsappLabel}</a></li>
+            {TEM_WHATSAPP && <li>WhatsApp <a className="font-mono" href={waUrl(mensagemDuvida())} target="_blank" rel="noopener noreferrer">{CONFIG.whatsappLabel}</a></li>}
             <li><a href={CONFIG.instagram} target="_blank" rel="noopener noreferrer">Instagram {CONFIG.instagramUsuario}</a></li>
+            {!TEM_WHATSAPP && <li><a href={DIRECT} target="_blank" rel="noopener noreferrer">Mandar mensagem no Direct ↗</a></li>}
             {CONFIG.cidade && <li>Envios de {CONFIG.cidade}</li>}
           </ul>
         </div>

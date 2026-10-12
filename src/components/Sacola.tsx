@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { CONFIG } from "@/lib/config";
-import { brl, mensagemPedido, produtoPorId, tamanhoTexto, totais, waUrl } from "@/lib/loja";
+import { CANAL, abrirContato, brl, contatoUrl, mensagemPedido, produtoPorId, tamanhoTexto, totais } from "@/lib/loja";
 import { CORES } from "@/lib/produtos";
 import { FotoProduto } from "./FotoProduto";
 import { useLoja } from "./LojaProvider";
@@ -16,7 +16,7 @@ const mascaraTel = (v: string) => {
   return d.length > 2 ? `(${d.slice(0, 2)}) ${d.slice(2)}` : d;
 };
 
-/** Gaveta da sacola: revisão, pagamento, entrega e envio do pedido pelo WhatsApp (ainda sem servidor). */
+/** Gaveta da sacola: revisão, pagamento, entrega e envio do pedido pelo WhatsApp ou Direct do Instagram (ainda sem servidor). */
 export function Sacola() {
   const { sacola, alterarQtd, remover, esvaziar, sacolaAberta, fecharSacola } = useLoja();
   const dlg = useRef<HTMLDialogElement>(null);
@@ -41,7 +41,7 @@ export function Sacola() {
     e.preventDefault();
     const novos: Erros = {};
     if (nome.trim().length < 2) novos.nome = "Como podemos chamar você?";
-    if (tel.replace(/\D/g, "").length < 10) novos.tel = "Digite o WhatsApp com DDD.";
+    if (tel.replace(/\D/g, "").length < 10) novos.tel = "Digite o telefone com DDD.";
     if (cep.replace(/\D/g, "").length !== 8) novos.cep = "Digite os 8 números do CEP.";
     if (endereco.trim().length < 5) novos.endereco = "Informe rua, número e complemento.";
     setErros(novos);
@@ -49,8 +49,9 @@ export function Sacola() {
     if (primeiro) { document.getElementById(`sac-${primeiro}`)?.focus(); return; }
 
     const codigo = "PD-" + (1000 + Math.floor(Math.random() * 9000));
-    const url = waUrl(mensagemPedido(sacola, { codigo, nome: nome.trim(), cep, endereco: endereco.trim(), pagamento }));
-    window.open(url, "_blank", "noopener");
+    const texto = mensagemPedido(sacola, { codigo, nome: nome.trim(), cep, endereco: endereco.trim(), pagamento });
+    const url = contatoUrl(texto);
+    abrirContato(texto);
     setEnviado({ codigo, url });
     esvaziar();
   };
@@ -69,8 +70,8 @@ export function Sacola() {
         <div className="grid flex-1 place-content-center justify-items-center gap-4 px-6 text-center">
           <p className="rotulo">Pedido enviado</p>
           <p className="rounded-full border-[1.5px] border-dashed border-pimenta px-6 py-3 font-mono text-3xl">{enviado.codigo}</p>
-          <p className="max-w-[34ch] text-tinta-2">Abrimos o WhatsApp com o resumo do pedido. Envie a mensagem para receber a chave Pix ou o link do cartão e o prazo de entrega.</p>
-          <a className="btn" href={enviado.url} target="_blank" rel="noopener noreferrer">Abrir o WhatsApp de novo</a>
+          <p className="max-w-[34ch] text-tinta-2">Abrimos o {CANAL} com o resumo do pedido{CANAL === "Instagram" ? " copiado: cole no Direct e envie" : ". Envie a mensagem"} para receber a chave Pix ou o link do cartão e o prazo de entrega.</p>
+          <a className="btn" href={enviado.url} target="_blank" rel="noopener noreferrer">Abrir o {CANAL} de novo</a>
           <button type="button" className="btn btn-linha" onClick={fecharSacola}>Continuar comprando</button>
         </div>
       ) : !sacola.length ? (
@@ -131,7 +132,7 @@ export function Sacola() {
               <legend className="rotulo mb-3">Entrega</legend>
               {([
                 ["nome", "Nome", nome, (v: string) => setNome(v), "name", false],
-                ["tel", "WhatsApp", tel, (v: string) => setTel(mascaraTel(v)), "tel", true],
+                ["tel", "Telefone com DDD", tel, (v: string) => setTel(mascaraTel(v)), "tel", true],
                 ["cep", "CEP", cep, (v: string) => setCep(mascaraCep(v)), "postal-code", true],
                 ["endereco", "Endereço com número e complemento", endereco, (v: string) => setEndereco(v), "street-address", false],
               ] as const).map(([id, rotulo, valor, set, auto, mono]) => (
@@ -159,7 +160,7 @@ export function Sacola() {
               <div className="flex justify-between"><dt>Frete</dt><dd>{t.frete ? brl(t.frete) : "grátis"}</dd></div>
               <div className="mt-1 flex items-baseline justify-between"><dt className="font-semibold">Total</dt><dd className="font-display text-3xl">{brl(t.total)}</dd></div>
             </dl>
-            <button className="btn mt-1" type="submit">Enviar pedido pelo WhatsApp</button>
+            <button className="btn mt-1" type="submit">Enviar pedido pelo {CANAL}</button>
           </div>
         </form>
       )}

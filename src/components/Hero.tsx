@@ -1,6 +1,7 @@
 "use client";
 
 import { CATALOGO } from "@/lib/produtos";
+import { CANAL } from "@/lib/loja";
 import { FotoProduto } from "./FotoProduto";
 import { useLoja } from "./LojaProvider";
 
@@ -21,7 +22,7 @@ export function Hero() {
             ainda mais.
           </h1>
           <p className="mt-6 max-w-[46ch] text-[clamp(1.02rem,1.5vw,1.15rem)] text-tinta-2">
-            Calcinhas do P ao GG, macias e sem marcar a roupa. Escolha cor e tamanho aqui, peça pelo WhatsApp e receba em casa, ou passe na nossa loja no Mega Modas Shopping, em Goiânia.
+            Calcinhas do P ao GG, macias e sem marcar a roupa. Escolha cor e tamanho aqui, peça pelo {CANAL} e receba em casa, ou passe na nossa loja no Mega Modas Shopping, em Goiânia.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a className="btn" href="#colecao">Ver coleção</a>

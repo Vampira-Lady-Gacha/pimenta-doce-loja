@@ -4,8 +4,9 @@ export const CONFIG = {
   segmento: "moda íntima",
   instagram: "https://www.instagram.com/intima.pimentadocemoda/",
   instagramUsuario: "@intima.pimentadocemoda",
-  whatsapp: "5511999990000", // PREENCHER: DDI + DDD + número, só dígitos
-  whatsappLabel: "(11) 99999-0000", // PREENCHER
+  // PREENCHER: DDI + DDD + número, só dígitos (ex.: "5562999999999"). Vazio = pedidos e dúvidas vão para o Direct do Instagram.
+  whatsapp: "",
+  whatsappLabel: "", // ex.: "(62) 99999-9999"
   cidade: "Goiânia, GO",
   lojaFisica: "Mega Modas Shopping, Goiânia, GO, CEP 74063-320", // conforme o perfil do Instagram
   bordao: "Moda íntima feita para você se amar ainda mais.",

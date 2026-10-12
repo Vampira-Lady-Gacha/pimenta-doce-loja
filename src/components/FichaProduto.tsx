@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { CONFIG } from "@/lib/config";
-import { brl, desconto, mensagemConsulta, parcela, precoPix, produtoPorId, waUrl } from "@/lib/loja";
+import { CANAL, TEM_WHATSAPP, abrirContato, brl, desconto, mensagemConsulta, parcela, precoPix, produtoPorId } from "@/lib/loja";
 import { CORES, CUIDADOS, type CorId } from "@/lib/produtos";
 import { FotoProduto } from "./FotoProduto";
 import { useLoja } from "./LojaProvider";
@@ -46,7 +46,9 @@ export function FichaProduto() {
   const pedirWhats = () => {
     if (!p) return;
     if (!tamanho) { setErro("Escolha um tamanho."); return; }
-    window.open(waUrl(mensagemConsulta(p, cor, tamanho, qtd)), "_blank", "noopener");
+    abrirContato(mensagemConsulta(p, cor, tamanho, qtd)).then((copiou) => {
+      if (copiou) toast("Mensagem copiada: cole no Direct do Instagram");
+    });
   };
 
   const irProvador = () => {
@@ -100,7 +102,7 @@ export function FichaProduto() {
                 </p>
               </div>
             ) : (
-              <p className="text-lg">Preço sob consulta <span className="block text-sm text-tinta-2">Escolha cor e tamanho e peça o valor pelo WhatsApp.</span></p>
+              <p className="text-lg">Preço sob consulta <span className="block text-sm text-tinta-2">Escolha cor e tamanho e peça o valor pelo {CANAL}.</span></p>
             )}
 
             <p className="text-tinta-2">{p.descricao}</p>
@@ -137,9 +139,12 @@ export function FichaProduto() {
               {p.preco ? (
                 <button type="button" className="btn flex-1" onClick={adicionarSacola}>Adicionar à sacola · {brl(p.preco * qtd)}</button>
               ) : (
-                <button type="button" className="btn flex-1" onClick={pedirWhats}>Pedir pelo WhatsApp</button>
+                <button type="button" className="btn flex-1" onClick={pedirWhats}>Pedir pelo {CANAL}</button>
               )}
             </div>
+            {!p.preco && !TEM_WHATSAPP && (
+              <p className="-mt-2 text-xs text-tinta-2">Abre o Direct da {CONFIG.instagramUsuario} com o pedido copiado: é só colar e enviar.</p>
+            )}
             {erro && <p role="alert" className="-mt-2 text-sm font-medium text-pimenta">{erro}</p>}
 
             <details className="border-t border-linha pt-4 text-sm">

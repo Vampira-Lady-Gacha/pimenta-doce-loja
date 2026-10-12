@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { faixa, waUrl } from "@/lib/loja";
+import { CANAL, contatoUrl, faixa } from "@/lib/loja";
 import { CATALOGO, TABELA_BOJO, TABELA_CALCINHA, TABELA_NOITE, TABELA_SUTIA, type CategoriaId } from "@/lib/produtos";
 import { Titulo } from "./Titulo";
 
@@ -91,8 +91,8 @@ export function Provador() {
           {foraDaTabela && (
             <p className="mt-6 rounded-2xl bg-papel-2 p-4 text-sm">
               Alguma medida ficou fora da nossa tabela.{" "}
-              <a className="text-pimenta underline underline-offset-4" href={waUrl(`Olá! Minhas medidas: busto ${m.busto} cm, sob o busto ${m.sob} cm, quadril ${m.quadril} cm. Qual tamanho vocês indicam?`)} target="_blank" rel="noopener noreferrer">
-                Mande suas medidas no WhatsApp
+              <a className="text-pimenta underline underline-offset-4" href={contatoUrl(`Olá! Minhas medidas: busto ${m.busto} cm, sob o busto ${m.sob} cm, quadril ${m.quadril} cm. Qual tamanho vocês indicam?`)} target="_blank" rel="noopener noreferrer">
+                Mande suas medidas no {CANAL}
               </a>{" "}
               e indicamos o modelo certo.
             </p>

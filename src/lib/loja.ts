@@ -33,6 +33,28 @@ export function totais(itens: ItemSacola[], pix: boolean) {
 
 export const waUrl = (texto: string) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(texto)}`;
 
+/** Canal de pedidos: WhatsApp se houver número em CONFIG, senão o Direct do Instagram. */
+export const TEM_WHATSAPP = CONFIG.whatsapp.length >= 12;
+export const CANAL = TEM_WHATSAPP ? "WhatsApp" : "Instagram";
+export const DIRECT = `https://ig.me/m/${CONFIG.instagramUsuario.replace("@", "")}`;
+/** O Direct não aceita texto pronto: abrirContato copia a mensagem antes. */
+export const contatoUrl = (texto: string) => (TEM_WHATSAPP ? waUrl(texto) : DIRECT);
+
+/** Abre o canal; no Instagram copia a mensagem para a pessoa colar. Devolve true se copiou. */
+export async function abrirContato(texto: string) {
+  let copiou = false;
+  if (!TEM_WHATSAPP) {
+    try {
+      await navigator.clipboard.writeText(texto);
+      copiou = true;
+    } catch {
+      /* sem permissão de cópia: abre o Direct mesmo assim */
+    }
+  }
+  window.open(contatoUrl(texto), "_blank", "noopener");
+  return copiou;
+}
+
 const linha = (i: ItemSacola) => {
   const p = produtoPorId(i.id);
   return p ? `• ${i.qtd}x ${nomeComRef(p)} (${CORES[i.cor].nome}, ${tamanhoTexto(i)}): ${p.preco ? brl(p.preco * i.qtd) : "preço a confirmar"}` : "";

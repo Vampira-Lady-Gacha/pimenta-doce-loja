@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { brl, desconto, precoPix } from "@/lib/loja";
+import { CANAL, brl, desconto, precoPix } from "@/lib/loja";
 import { CATALOGO, CATEGORIAS, CORES, type CategoriaId, type CorId, type Produto } from "@/lib/produtos";
 import { FotoProduto } from "./FotoProduto";
 import { useLoja } from "./LojaProvider";
@@ -41,7 +41,7 @@ export function Colecao() {
     <section id="colecao" className="secao">
       <div className="wrap">
         <Titulo rotulo="Coleção" titulo={<>Peças para <em>todo dia</em> e para a noite</>}>
-          Fotos das nossas peças. Abra a que gostou, escolha cor e tamanho e peça pelo WhatsApp.
+          Fotos das nossas peças. Abra a que gostou, escolha cor e tamanho e peça pelo {CANAL}.
         </Titulo>
 
         <div className="mb-8 grid gap-3">

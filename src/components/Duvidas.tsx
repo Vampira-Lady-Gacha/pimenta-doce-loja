@@ -1,14 +1,14 @@
 import { CONFIG } from "@/lib/config";
-import { brl } from "@/lib/loja";
+import { CANAL, brl } from "@/lib/loja";
 import { Titulo } from "./Titulo";
 
 const PERGUNTAS: [string, string][] = [
-  ["Como sei meu tamanho?", "Use o provador de medidas acima com a medida do quadril em centímetros. Se ficar entre dois tamanhos, mande suas medidas no WhatsApp e indicamos o modelo."],
-  ["Por que algumas peças estão com preço sob consulta?", "Os valores variam por cor e modelo. Escolha a peça, o tamanho e a cor e toque em Pedir pelo WhatsApp: respondemos com o valor e as cores disponíveis."],
+  ["Como sei meu tamanho?", `Use o provador de medidas acima com a medida do quadril em centímetros. Se ficar entre dois tamanhos, mande suas medidas no ${CANAL} e indicamos o modelo.`],
+  ["Por que algumas peças estão com preço sob consulta?", `Os valores variam por cor e modelo. Escolha a peça, o tamanho e a cor e toque em Pedir pelo ${CANAL}: respondemos com o valor e as cores disponíveis.`],
   ["Posso trocar peça íntima?", "Pode trocar o tamanho em até 7 dias após o recebimento, com a peça sem uso, com etiqueta e com o protetor higiênico da calcinha. Por higiene, não aceitamos peças usadas ou lavadas."],
   ["Como vem a embalagem?", "Em caixa ou envelope liso, sem o nome da loja nem a descrição do conteúdo por fora."],
-  ["Quanto custa o frete?", `Frete fixo de ${brl(CONFIG.freteFixo)} para todo o Brasil, grátis em pedidos acima de ${brl(CONFIG.freteGratisAcima)}. O prazo depende da sua região e é informado no fechamento pelo WhatsApp.`],
-  ["Quais as formas de pagamento?", `Pix com ${Math.round(CONFIG.descontoPix * 100)}% de desconto ou cartão de crédito em até ${CONFIG.parcelasSemJuros}x sem juros, com link de pagamento enviado no WhatsApp.`],
+  ["Quanto custa o frete?", `Frete fixo de ${brl(CONFIG.freteFixo)} para todo o Brasil, grátis em pedidos acima de ${brl(CONFIG.freteGratisAcima)}. O prazo depende da sua região e é informado no fechamento pelo ${CANAL}.`],
+  ["Quais as formas de pagamento?", `Pix com ${Math.round(CONFIG.descontoPix * 100)}% de desconto ou cartão de crédito em até ${CONFIG.parcelasSemJuros}x sem juros, com link de pagamento enviado no ${CANAL}.`],
   ["Como lavar as peças?", "À mão, em água fria e com sabão neutro. Não torcer e secar à sombra, longe do sol direto."],
 ];
 
@@ -17,7 +17,7 @@ export function Duvidas() {
     <section id="duvidas" className="secao pt-0">
       <div className="wrap grid gap-10 lg:grid-cols-[minmax(0,.7fr)_minmax(0,1fr)]">
         <Titulo rotulo="Dúvidas" titulo={<>Antes de <em>escolher</em></>} className="mb-0 self-start">
-          Não achou a resposta? Chame no WhatsApp pelo botão verde.
+          Não achou a resposta? Chame no {CANAL} pelo botão no canto da tela.
         </Titulo>
         <div className="border-t border-linha">
           {PERGUNTAS.map(([p, r]) => (

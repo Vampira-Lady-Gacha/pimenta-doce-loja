@@ -17,7 +17,7 @@ export type Produto = {
   categoria: CategoriaId;
   modelo: Modelo;
   acabamento: Acabamento;
-  /** Sem preço: o site mostra "Preço sob consulta" e o pedido segue pelo WhatsApp. */
+  /** Sem preço: o site mostra "Preço sob consulta" e o pedido segue pelo WhatsApp ou Direct. */
   preco?: number;
   precoDe?: number;
   /** Referência usada nos posts (ex.: REF 2727). */
